@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rock-paper-scissors game</title>
+  </head>
+  <body>
+    <script>
+      let humanScore = 0;
+      let computerScore = 0;
+
+      function getComputerChoice() {
+        return Math.floor(Math.random() * 3);
+      }
+
+      function getHumanChoice() {
+        const userChoice = parseInt(
+          prompt("Your weapon of choice? 0 - rock, 1 - paper, 2 - scissors", 0)
+        );
+
+        if (isNaN(userChoice) || userChoice < 0 || userChoice > 2) {
+          alert("Enter a corresponding number");
+          throw new Error("Did not enter a correct value!");
+        } else {
+          return userChoice;
+        }
+      }
+
+      function weaponSwitch(num) {
+        switch (num) {
+          case 0:
+            return "Rock";
+          case 1:
+            return "Paper";
+          case 2:
+            return "Scissors";
+        }
+      }
+
+      function playRound(humanChoice, computerChoice) {
+        console.log(`You weapon of choice was: ${humanChoice}`);
+        console.log(`CPU's weapon: ${computerChoice}`);
+
+        if (
+          (humanChoice === "Rock" && computerChoice === "Scissors") ||
+          (humanChoice === "Scissors" && computerChoice === "Paper") ||
+          (humanChoice === "Paper" && computerChoice === "Rock")
+        ) {
+          console.log(`You win this round!`);
+          humanScore++;
+        } else if (humanChoice === computerChoice) {
+          console.log(`It's a tie! Nobody gets a point.`);
+        } else {
+          console.log(`CPU wins this round!`);
+          computerScore++;
+        }
+
+        console.log(`Score: 
+        Human(You):${humanScore} 
+        CPU:${computerScore}`);
+      }
+
+      while (humanScore < 5 && computerScore < 5) {
+        const humanChoice = getHumanChoice();
+        const computerChoice = getComputerChoice();
+
+        const stringedHumanChoice = weaponSwitch(humanChoice);
+        const stringedComputerChoice = weaponSwitch(computerChoice);
+
+        playRound(stringedHumanChoice, stringedComputerChoice);
+
+        if (humanScore >= 5) {
+          console.log("Congrats! You've won the game!");
+        } else if (computerScore >= 5) {
+          console.log("Beaten by the computer! You lost this one buddy.");
+        }
+      }
+    </script>
+  </body>
+</html>
